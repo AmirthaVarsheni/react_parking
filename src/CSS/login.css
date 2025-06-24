@@ -1,0 +1,10 @@
+.login-layout{
+    width: 400px;
+    margin: 60px auto;
+   
+}
+.label-section{
+    display: flex;
+    flex-direction: column;
+ 
+}
