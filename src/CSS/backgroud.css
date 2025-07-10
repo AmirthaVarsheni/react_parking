@@ -1,0 +1,14 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color:#fff
+}
+
+.bg-animation {
+  background: #111;
+  min-height: 100vh;     /* fills full screen */
+  width: 100%;
+  display: flex;          /* optional: for centering */
+  flex-direction: column;
+}

@@ -4,15 +4,20 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 
 // Views (Pages)
-import Login from '../Login/login';
+import Login from '../components/Welcome/welcome.';
+import About from '../components/About/about';
+import Skills from '../components/skills/card';
+import React from '../components/POC/react';
+import EmployeeList from '../components/POC/EmployerList';
+
 
 export const router = createBrowserRouter([
   {
-    path: '/parking/',
+    path: '/portfolio/',
     element: <App/>,
     children: [
       {
-        path: 'login',
+        path: 'welcome',
         element: <Login/>,
         handle: {
           meta: {
@@ -22,9 +27,54 @@ export const router = createBrowserRouter([
           }
         }
       },
+     {
+      path: 'about',
+        element: <About/>,
+        handle: {
+          meta: {
+            title: 'page.title.home',
+            app: 'app.title',
+            isSecured: false,
+          }
+        }
+     },
+     {
+      path: 'skills',
+        element: <Skills/>,
+        handle: {
+          meta: {
+            title: 'page.title.home',
+            app: 'app.title',
+            isSecured: false,
+          }
+        }
+     },
+     {
+      path: 'react',
+        element: <React/>,
+        handle: {
+          meta: {
+            title: 'page.title.home',
+            app: 'app.title',
+            isSecured: false,
+          }
+        }
+     },     
+     {
+      path: 'employeeList',
+        element: <EmployeeList/>,
+        handle: {
+          meta: {
+            title: 'page.title.home',
+            app: 'app.title',
+            isSecured: false,
+          }
+        }
+     }     
       
     ],
   },
+   
 ]);
 
  
