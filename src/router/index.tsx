@@ -4,20 +4,21 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 
 // Views (Pages)
-import Login from '../components/Welcome/welcome.';
-import About from '../components/About/about';
+import Login from '../components/Login/Login';
+import Dashboard from '../components/Dashboard/dashboard';
 import Skills from '../components/skills/card';
+import ExpenseForm from '../components/ExpenseForm/expenses';
 import React from '../components/POC/react';
 import EmployeeList from '../components/POC/EmployerList';
 
 
 export const router = createBrowserRouter([
   {
-    path: '/portfolio/',
+    path: '/spendee/',
     element: <App/>,
     children: [
       {
-        path: 'welcome',
+        path: 'login',
         element: <Login/>,
         handle: {
           meta: {
@@ -28,8 +29,8 @@ export const router = createBrowserRouter([
         }
       },
      {
-      path: 'about',
-        element: <About/>,
+      path: 'dashboard/:userId',
+        element: <Dashboard/>,
         handle: {
           meta: {
             title: 'page.title.home',
@@ -50,8 +51,8 @@ export const router = createBrowserRouter([
         }
      },
      {
-      path: 'react',
-        element: <React/>,
+      path: 'expenseForm/',
+        element: <ExpenseForm/>,
         handle: {
           meta: {
             title: 'page.title.home',

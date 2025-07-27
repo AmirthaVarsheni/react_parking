@@ -6,7 +6,7 @@ interface EmployeeCardProps {
 }
 
 const EmployeeCard: React.FC<EmployeeCardProps> = ({ name, designation, department, experience }) => {
-  const cardStyle = {
+  const cardStyle:React.CSSProperties= {
     border: "1px solid #ccc",
     padding: "16px",
     borderRadius: "8px",
