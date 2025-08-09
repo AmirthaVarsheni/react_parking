@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import loginFormSlice from "./login";
+import loginSlice from "./login";
 
 export const rootStore :any = configureStore ({
     reducer:{
-        login: loginFormSlice.reducer as any
+        login: loginSlice.reducer as any
     },
 })
 

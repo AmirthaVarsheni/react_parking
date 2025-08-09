@@ -3,19 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { FormControl, FormHelperText, Input, FormLabel, Button } from '@mui/material';
 import '../../CSS/welcome.css';
 import Loginlogo from '../../assets/Loginlogo.png';
-import type { RootState } from '../../store';
+import type { AppDispatch, RootState } from '../../store';
 import { sendOTP, verifyOTP } from '../../api';
 import AlertBox from '../Alert/Alert';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import loginSlice from '../../store/login'
  
 function Login() {
-  const loginForms :any = useSelector((state:RootState)=>state.login.login);
-  console.log(loginForms)
+  const dispatch = useDispatch<AppDispatch>();
+  const {setField} :any = loginSlice.actions;
+  const contact = useSelector((state: RootState) => state.login.contact);
+  const otp = useSelector((state: RootState) => state.login.otp);
   const navigate = useNavigate();
-
-  const [contact, setContact] = useState<string>('');
   const [emailError, setEmailError] = useState<boolean>(false);
-  const [otp, setOTP] = useState<any>('');
   const [isOTP, setIsOTP] = useState<boolean>(false);
   const [isValidOTP, setisValidOTP] = useState<boolean>(false)
   const [generatedOTP, setgeneratedOTP] = useState('')
@@ -61,16 +61,15 @@ function Login() {
 
       <div className="right-section">
         <div className="secondary-layout">
-          <h1>Log in</h1>
-          {loginForms}
+          <h1>Log in</h1>{contact}{otp}
           {isOTP && <AlertBox severity={isValidOTP ? 'success' : 'info'} message={isValidOTP ? 'OTP is validated succesfully' : `Your OTP is ${generatedOTP}`} />}
           <FormControl error={emailError} fullWidth margin="normal">
             <FormLabel htmlFor="email-input">Email address</FormLabel>
             <Input
               id="email-input"
               type="email"
-              value={loginForms.contact}
-              onChange={(e) => setContact(e.target.value)}
+              value={contact}
+              onChange={(e) =>dispatch(setField({ field: 'contact', value: e.target.value }))}
               aria-describedby="email-helper-text"
             />
             <FormHelperText id="email-helper-text">
@@ -83,8 +82,8 @@ function Login() {
                 <Input
                   id="otp-input"
                   type="text"
-                  value={loginForms.otp}
-                  onChange={(e) => setOTP(e.target.value)}
+                  value={otp}
+                  onChange={(e) =>dispatch(setField({ field: 'otp', value: e.target.value }))}
                   aria-describedby="otp-helper-text"
                 />
               </div>
@@ -106,3 +105,5 @@ function Login() {
 }
 
 export default Login;
+
+

@@ -1,27 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { Login } from '../interface/login';
+import { createSlice, type PayloadAction} from '@reduxjs/toolkit';
 
-type loginState = {
-    login:Login[];
+interface LoginState {
+  contact: string;
+  otp: string;
+}
+
+const initialState: LoginState = {
+  contact: '',
+  otp: '',
 };
 
-const initialState:loginState = {
-    login: [] 
-};
-
-const loginFormSlice = createSlice({
-    name:'loginForm',
-    initialState,
-     reducers: {
-    setLogin: (state, action) => {
-      state.login.push(action.payload);
+const loginSlice = createSlice({
+  name: 'login',
+  initialState,
+  reducers: {
+   setField(state:any, action: PayloadAction<{ field:any,value: string }>) {
+      const { field, value }  = action.payload;
+      state[field] = value;
     },
-    clearLogin: (state) => {
-      state.login = [];
+    setOTP(state, action: any) {
+      state.otp = action.payload;
     },
+    resetLogin(state) {
+      state.contact = '';
+      state.otp = '';
+    }
   },
+});
 
 
-})
 
-export default loginFormSlice
+export default loginSlice
