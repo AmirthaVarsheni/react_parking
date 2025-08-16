@@ -8,8 +8,6 @@ import Login from '../components/Login/Login';
 import Dashboard from '../components/Dashboard/dashboard';
 import Skills from '../components/skills/card';
 import ExpenseForm from '../components/ExpenseForm/expenses';
-import React from '../components/POC/react';
-import EmployeeList from '../components/POC/EmployerList';
 
 
 export const router = createBrowserRouter([
@@ -61,18 +59,7 @@ export const router = createBrowserRouter([
           }
         }
      },     
-     {
-      path: 'employeeList',
-        element: <EmployeeList/>,
-        handle: {
-          meta: {
-            title: 'page.title.home',
-            app: 'app.title',
-            isSecured: false,
-          }
-        }
-     }     
-      
+
     ],
   },
    
