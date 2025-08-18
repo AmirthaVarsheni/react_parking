@@ -8,6 +8,7 @@ import Login from '../components/Login/Login';
 import Dashboard from '../components/Dashboard/dashboard';
 import Skills from '../components/skills/card';
 import ExpenseForm from '../components/ExpenseForm/expenses';
+import RegisterForm from '../components/Login/Register';
 
 
 export const router = createBrowserRouter([
@@ -25,6 +26,18 @@ export const router = createBrowserRouter([
             isSecured: false,
           }
         }
+      },
+      {
+        path:'register',
+        element:<RegisterForm/>,
+        handle: {
+          meta: {
+            title: 'page.title.home',
+            app: 'app.title',
+            isSecured: false,
+          }
+        }
+
       },
      {
       path: 'dashboard/:userId',
