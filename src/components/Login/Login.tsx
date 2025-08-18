@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormControl, FormHelperText, Input, FormLabel, Button } from '@mui/material';
 import '../../CSS/welcome.css';
@@ -20,12 +20,6 @@ function Login() {
   const [generatedOTP, setgeneratedOTP] = useState('');
   const [Timer, setTimer] = useState<boolean>(false);
   const [Resend,setResend] = useState(false)
-
-  useEffect(() => {
-    if(Timer === true && isOTP === true) {
-      timeOut();
-    }
-  }, [Timer, isOTP])
 
   const generateOTP = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -63,13 +57,7 @@ function Login() {
     }
   };
 
-const timeOut = () => {
-  setTimeout(() => {
-    console.log('fgcvhbjkl');
-    setResend(true);
-    setTimer(false);
-  }, 3000);
-};
+
 
 
   return (
@@ -108,7 +96,7 @@ const timeOut = () => {
             }
           </FormControl>
            
-          {Timer && <div> <CountDownTimer Duration={30} onExpire={() => setTimer(false)} /> </div>}
+          {Timer && <div> <CountDownTimer Duration={30} onExpire={() => setTimer(false)}  onSend={(val)=>setResend(val)}/> </div>}
           {Resend && <div> Resend the OTP  </div>}
 
           <Button
