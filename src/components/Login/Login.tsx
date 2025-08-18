@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormControl, FormHelperText, Input, FormLabel, Button } from '@mui/material';
 import '../../CSS/welcome.css';
@@ -6,9 +6,9 @@ import Loginlogo from '../../assets/Loginlogo.png';
 import type { AppDispatch, RootState } from '../../store';
 import AlertBox from '../Alert/Alert';
 import { useSelector, useDispatch } from 'react-redux';
-import loginSlice, { sendOTPthunk,verifyOTPthunk } from '../../store/login'
+import loginSlice, { sendOTPthunk, verifyOTPthunk } from '../../store/login'
 import type { LoginState } from '../../interface/interface';
-
+import CountDownTimer from '../common/CountDownTimer';
 function Login() {
   const dispatch = useDispatch<AppDispatch>();
   const { setField }: any = loginSlice.actions;
@@ -17,7 +17,15 @@ function Login() {
   const [emailError, setEmailError] = useState<boolean>(false);
   const [isOTP, setIsOTP] = useState<boolean>(false);
   const [isValidOTP, setisValidOTP] = useState<boolean>(false)
-  const [generatedOTP, setgeneratedOTP] = useState('')
+  const [generatedOTP, setgeneratedOTP] = useState('');
+  const [Timer, setTimer] = useState<boolean>(false);
+  const [Resend,setResend] = useState(false)
+
+  useEffect(() => {
+    if(Timer === true && isOTP === true) {
+      timeOut();
+    }
+  }, [Timer, isOTP])
 
   const generateOTP = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,22 +34,22 @@ function Login() {
       return;
     }
     setEmailError(false);
+         setTimer(true)
     try {
       const resp: any = await dispatch(sendOTPthunk(loginForm.contact))
       if (resp?.meta?.requestStatus === 'fulfilled') {
         setgeneratedOTP(resp?.payload)
         setIsOTP(true);
+   
       }
     } catch (error) {
       console.error('Failed to send OTP:', error);
     }
   };
 
-
-
   const handleSubmit = async () => {
     try {
-      const verified :any = await dispatch(verifyOTPthunk({ contact: loginForm?.contact, otp: loginForm?.otp }))
+      const verified: any = await dispatch(verifyOTPthunk({ contact: loginForm?.contact, otp: loginForm?.otp }))
       if (verified?.meta?.requestStatus === 'fulfilled') {
         setisValidOTP(true);
         localStorage.setItem('user', JSON.stringify(verified?.data?.user));
@@ -54,6 +62,15 @@ function Login() {
       alert('Verification error. Please try again later.');
     }
   };
+
+const timeOut = () => {
+  setTimeout(() => {
+    console.log('fgcvhbjkl');
+    setResend(true);
+    setTimer(false);
+  }, 3000);
+};
+
 
   return (
     <div className="login-container">
@@ -77,7 +94,7 @@ function Login() {
             <FormHelperText id="email-helper-text">
               {emailError ? 'Please enter a valid email address.' : ' '}
             </FormHelperText>
-            {isOTP && 
+            {isOTP &&
               <div style={{ marginTop: '1rem' }}>
                 <FormLabel htmlFor="otp-input">OTP</FormLabel>
                 <Input
@@ -90,6 +107,9 @@ function Login() {
               </div>
             }
           </FormControl>
+           
+          {Timer && <div> <CountDownTimer Duration={30} onExpire={() => setTimer(false)} /> </div>}
+          {Resend && <div> Resend the OTP  </div>}
 
           <Button
             variant="contained"
